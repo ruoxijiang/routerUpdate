@@ -96,7 +96,7 @@ func updateIP(customIPFile *string) {
 	buff := make([]byte, 4)
 	for {
 		totalBytes, err := repsonse.Body.Read(buff)
-		if totalBytes > 0 && err == nil {
+		if totalBytes > 0 {
 			if _, writeErr := fi.Write(buff); writeErr != nil {
 				ifErrPanic(writeErr)
 			}
@@ -107,6 +107,7 @@ func updateIP(customIPFile *string) {
 			}
 			break
 		}
+		buff = make([]byte, 4)
 	}
 }
 
