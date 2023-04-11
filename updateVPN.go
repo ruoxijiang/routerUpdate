@@ -89,7 +89,7 @@ func updateIP(customIPFile *string) {
 	repsonse, err := http.Get(ipURL)
 	if err != nil {
 		fmt.Println(err)
-		return
+		ifErrPanic(err)
 	}
 	fmt.Println("URL read")
 	defer repsonse.Body.Close()
@@ -121,11 +121,10 @@ func updateDNS(customDNSFile *string, dnsStr *string) {
 
 	if err != nil {
 		fmt.Println(err)
-		return
 	}
+	ifErrPanic(err)
 	fmt.Println("URL read")
 	defer repsonse.Body.Close()
-	ifErrPanic(err)
 	if err := os.Remove(fileName); err != nil {
 		fmt.Println(err)
 	}
@@ -153,6 +152,7 @@ func updateDNS(customDNSFile *string, dnsStr *string) {
 	} else {
 		fmt.Println(err)
 	}
+	ifErrPanic(err)
 	fmt.Println("Writing file")
 	for {
 		line, err := readLine(repsonse.Body)
